@@ -1,0 +1,135 @@
+
+.contact-container{
+    display: flex; 
+    flex-direction:column;
+    margin-top: 63px;
+}
+
+.sub-container{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid rgb(63, 63, 63);
+    border-top: 1px solid rgb(63, 63, 63);
+    padding: 18px;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.list-one{
+    display: flex;
+}
+.list-two{
+    display: flex;
+    flex-direction:column;
+    margin-right: 0px;
+}
+.p-1{
+    padding: 0;
+    margin: 1px 0 2px 0;
+    font-size: 1rem;
+    color: white;
+}
+.p-2{
+    padding: 0;
+    margin: 5px 0 0 0;
+    font-size: 0.8rem;
+    color: rgb(116, 116, 116);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 150px;
+    height: 12px;
+    white-space: nowrap;
+}
+.list-three{
+    margin-left: 20px;    
+    color: rgb(116, 116, 116);
+}
+
+.collapse1{
+    background: none;
+    border-style: none;
+    cursor: pointer;
+}
+
+.collapse1:hover{
+    background: none;
+    border-style: none;
+    padding:0;
+    margin:0;
+}
+
+.dropDown{
+    background: #010101;
+    color: #c6c6c6;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    margin-top: 10px;
+    justify-content: space-around;
+    border-radius: 4px;
+
+    position: relative;
+    max-height: 100%;
+    transition: all .4s ease;
+}
+
+.dropDown p{
+    font-size: 0.7rem;
+}
+
+.drop1, .drop2, .drop3, .drop4{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+.drop1{
+    margin-top: 4px;
+}
+.drop1 p{
+    margin-top:12px;
+}
+.drop2 p{
+    margin-top:2px;
+}
+.drop2 span{
+    margin-bottom: 6px;
+}
+.drop3 p{
+    margin-top:2px;
+}
+.drop3 span{
+    margin-bottom: 6px;
+}
+.drop4 p{
+    margin-top:2px;
+}
+.drop4 span{
+    margin-bottom: 6px;
+}
+.dropDown span{
+    margin-top: 15px;
+}
+.drop1:hover, .drop2:hover, .drop3:hover, .drop4:hover{
+    color: #00ffb9;
+}
+
+.call-container{
+    display: flex; 
+    margin:0;
+    padding:0;
+    height: 100%;
+    width: 100%;
+}
+
+.call-title{
+    margin-left:30px;
+    color: white;
+    height:100%;
+    width:100%;
+    font-size: 1.5rem;
+}

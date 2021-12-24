@@ -1,0 +1,25 @@
+footer{ 
+    height: 20px;
+    /* margin: 0 auto; */
+    margin-top: -60px;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    z-index: 100px;
+    display: flex;
+    bottom: 110px;
+    justify-content:space-around;
+    align-items: center;
+    width: 376px;
+
+    background: rgb(16, 16, 16);
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10.3px);
+    -webkit-backdrop-filter: blur(10.3px);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+footer .item1, .item2, .item3, .item4{
+    cursor: pointer;
+}
