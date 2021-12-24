@@ -34,6 +34,14 @@ const Inbox = () => {
     console.log("delete");
   };
 
+//   useEffect(()=>{
+//     async function onRemove(id){
+//         await fetch(`https://aircall-job.herokuapp.com/activities/${id}`,{method:'DELETE'});
+//         setList('Delete successful');
+//     }
+//     onRemove();
+//   },[])
+
   const onSave = (id) => {
     setList(list.filter((user) => user.id !== id));
 
