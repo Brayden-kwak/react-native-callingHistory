@@ -44,7 +44,6 @@ const Inbox = () => {
       body: JSON.stringify(lists),
     }).then(() => {
       setSaved(id);
-      setList(id);
       console.log("new lists added!");
     });
   };

@@ -12,7 +12,6 @@
 .app-container {
     width: 376px;
     height: 666px;
-    /* z-index: 100; */
     margin-top: 120px;
     
     background: linear-gradient(0deg, rgba(36,202,204,1) 0%, rgba(13,24,19,1) 10%, rgba(0,0,0,1) 100%);

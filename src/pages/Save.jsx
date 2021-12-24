@@ -3,10 +3,7 @@ import "../css/save.css";
 import { IoIosMore } from "react-icons/io";
 import Moment from "moment";
 import axios from "axios";
-import {
-  RiDeleteBinLine,
-  RiDownloadLine,
-} from "react-icons/ri";
+import { RiDeleteBinLine, RiDownloadLine } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
 
 const Save = () => {
@@ -17,17 +14,19 @@ const Save = () => {
   const id = query.get("id");
 
   useEffect(() => {
-    const fetch = async() => {
-        try{
-            const getId = axios.get(`https://aircall-job.herokuapp.com/activities/${id}`);
-            const response = await axios.all([getId]);
-            setList(response[0].data);
-        } catch(err) {
-            console.log(err);
-        }
+    const fetch = async () => {
+      try {
+        const getId = axios.get(
+          `https://aircall-job.herokuapp.com/activities/${id}`
+        );
+        const response = await axios.all([getId]);
+        setList(response.data);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetch();
-  },[]);
+  }, [id]);
 
   const toggle = (index) => {
     if (clicked === index) {
@@ -78,8 +77,8 @@ const Save = () => {
 
                   <div className="drop3">
                     <span>
-                        <span>{data.via}</span>
-                        <p>Via</p>
+                      <span>{data.via}</span>
+                      <p>Via</p>
                     </span>
                     <p>Share</p>
                   </div>

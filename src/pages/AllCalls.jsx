@@ -4,6 +4,7 @@ import { IoIosMore } from "react-icons/io";
 import Moment from "moment";
 
 import { RiDeleteBinLine, RiPhoneLine } from "react-icons/ri";
+import { BiPhoneIncoming } from "react-icons/bi";
 import { GoPlus } from "react-icons/go";
 
 const Inbox = () => {
@@ -35,9 +36,16 @@ const Inbox = () => {
 
   const onSave = (id) => {
     setList(list.filter((user) => user.id !== id));
-    console.log("save");
-    setSaved(id);
-    console.log(save);
+
+    const lists = { list, save };
+    fetch(`https://aircall-job.herokuapp.com/activities/${id}`, {
+      method: "POST",
+      header: { "Content-Type": "application/json" },
+      body: JSON.stringify(lists),
+    }).then(() => {
+      setSaved(id);
+      console.log("new lists added!");
+    });
   };
 
   return (
@@ -46,10 +54,14 @@ const Inbox = () => {
         <p className="call-title">Inbox</p>
       </div>
 
-      {list || list.length > 0 || list.call_type === "missed"
+      {list && list.length > 0
         ? list.map((data, index) => (
             <div className="sub-container">
-              <RiPhoneLine color={"gray"} size={22} />
+              {data.call_type === "missed" ? (
+                <BiPhoneIncoming color={"gray"} size={22} />
+              ) : (
+                <RiPhoneLine color={"gray"} size={22} />
+              )}
               <div className="list-two">
                 <p className="p-1">{data.from}</p>
                 <p className="p-2">{data.to}</p>
