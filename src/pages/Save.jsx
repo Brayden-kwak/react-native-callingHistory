@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from "react";
 import "../css/save.css";
 import { IoIosMore } from "react-icons/io";
-import listData from "../data.json";
+import Moment from "moment";
+import axios from "axios";
 import {
-  RiUserShared2Line,
   RiDeleteBinLine,
   RiDownloadLine,
 } from "react-icons/ri";
+import { useLocation } from "react-router-dom";
 
 const Save = () => {
-  const [list, setList] = useState(listData.data);
+  const [list, setList] = useState([]);
   const [clicked, setClicked] = useState(false);
 
+  const query = new URLSearchParams(useLocation().search);
+  const id = query.get("id");
+
   useEffect(() => {
-    setList(list);
-  }, [list]);
+    const fetch = async() => {
+        try{
+            const getId = axios.get(`https://aircall-job.herokuapp.com/activities/${id}`);
+            const response = await axios.all([getId]);
+            setList(response[0].data);
+        } catch(err) {
+            console.log(err);
+        }
+    };
+    fetch();
+  },[]);
 
   const toggle = (index) => {
     if (clicked === index) {
@@ -38,10 +51,12 @@ const Save = () => {
             <div className="sub-container">
               <RiDownloadLine color={"gray"} size={22} />
               <div className="list-two">
-                <p className="p-1">{data.number}</p>
-                <p className="p-2">{data.message}</p>
+                <p className="p-1">{data.from}</p>
+                <p className="p-2">{data.to}</p>
               </div>
-              <p className="list-three">{data.date}</p>
+              <p className="list-three">
+                {Moment(data.created_at).format("YYYY.MM.DD")}
+              </p>
 
               <div
                 className="collapse1"
@@ -57,16 +72,18 @@ const Save = () => {
               {clicked === index ? (
                 <div className="dropDown">
                   <div className="drop1">
-                    <span>{data.time}</span>
+                    <span>{data.duration}</span>
                     <p>Call time</p>
                   </div>
 
                   <div className="drop3">
                     <span>
-                      <RiUserShared2Line size={23} />
+                        <span>{data.via}</span>
+                        <p>Via</p>
                     </span>
                     <p>Share</p>
                   </div>
+
                   <div className="drop4" onClick={() => onRemove(data.id)}>
                     <span>
                       <RiDeleteBinLine size={23} />

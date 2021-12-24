@@ -2,19 +2,25 @@ import React, { useState, useEffect } from "react";
 import "../css/contact.css";
 import { BiPhoneIncoming } from "react-icons/bi";
 import { IoIosMore } from "react-icons/io";
-import listData from "../data.json";
-import { RiUserShared2Line, RiDeleteBinLine } from "react-icons/ri";
+import Moment from "moment";
+
+import { RiDeleteBinLine } from "react-icons/ri";
 import { GoPlus } from "react-icons/go";
 
 const Inbox = () => {
-  const [list, setList] = useState(listData.data);
+  const [list, setList] = useState([]);
   const [clicked, setClicked] = useState(false);
   const [save, setSaved] = useState([]);
 
   useEffect(() => {
-    setList(list);
-    setSaved(save);
-  }, [list, save]);
+    fetch(`https://aircall-job.herokuapp.com/activities`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setList(data);
+      });
+  }, []);
 
   const toggle = (index) => {
     if (clicked === index) {
@@ -30,9 +36,17 @@ const Inbox = () => {
 
   const onSave = (id) => {
     setList(list.filter((user) => user.id !== id));
-    console.log("save");
-    setSaved(id);
-    console.log(save);
+
+    const lists = { list, save };
+    fetch(`https://aircall-job.herokuapp.com/activities/${id}`, {
+      method: "POST",
+      header: { "Content-Type": "application/json" },
+      body: JSON.stringify(lists),
+    }).then(() => {
+      setSaved(id);
+      setList(id);
+      console.log("new lists added!");
+    });
   };
 
   return (
@@ -40,62 +54,68 @@ const Inbox = () => {
       <div className="call-container">
         <p className="call-title">Inbox</p>
       </div>
+
       {list && list.length > 0
-        ? list.map((data, index) => (
-            <div className="sub-container">
-              <BiPhoneIncoming color={"gray"} size={22} />
-              <div className="list-two">
-                <p className="p-1">{data.number}</p>
-                <p className="p-2">{data.message}</p>
-              </div>
-              <p className="list-three">{data.date}</p>
-
-              <div
-                className="collapse1"
-                onClick={() => toggle(index)}
-                key={index}
-              >
-                {clicked === index ? (
-                  <IoIosMore color={"white"} size={22} className="btn" />
-                ) : (
-                  <IoIosMore color={"white"} size={22} className="btn" />
-                )}
-              </div>
-              {clicked === index ? (
-                <div className="dropDown">
-                  <div className="drop1">
-                    <span>{data.time}</span>
-                    <p>Call time</p>
-                  </div>
-
-                  <div
-                    className="drop2"
-                    data={data}
-                    id={data.id}
-                    onClick={() => onSave(data.id)}
-                  >
-                    <span>
-                      <GoPlus size={23} />
-                    </span>
-                    <p>Save</p>
-                  </div>
-
-                  <div className="drop3">
-                    <span>
-                      <RiUserShared2Line size={23} />
-                    </span>
-                    <p>Share</p>
-                  </div>
-                  <div className="drop4" onClick={() => onRemove(data.id)}>
-                    <span>
-                      <RiDeleteBinLine size={23} />
-                    </span>
-                    <p>Delete</p>
-                  </div>
+        ? list.map((data, index) =>
+            data.call_type === "missed" ? (
+              <div className="sub-container">
+                <BiPhoneIncoming color={"gray"} size={22} />
+                <div className="list-two">
+                  <p className="p-1">{data.from}</p>
+                  <p className="p-2">{data.to}</p>
                 </div>
-              ) : null}
-            </div>
-          ))
+                <p className="list-three">
+                  {Moment(data.created_at).format("YYYY.MM.DD")}
+                </p>
+
+                <div
+                  className="collapse1"
+                  onClick={() => toggle(index)}
+                  key={index}
+                >
+                  {clicked === index ? (
+                    <IoIosMore color={"white"} size={22} className="btn" />
+                  ) : (
+                    <IoIosMore color={"white"} size={22} className="btn" />
+                  )}
+                </div>
+                {clicked === index ? (
+                  <div className="dropDown">
+                    <div className="drop1">
+                      <span>{data.duration}</span>
+                      <p>Call time</p>
+                    </div>
+
+                    <div className="drop3">
+                      <span>{data.via}</span>
+                      <p>Via</p>
+                    </div>
+
+                    <div
+                      className="drop2"
+                      data={data}
+                      id={data.id}
+                      onClick={() => onSave(data.id)}
+                    >
+                      <span>
+                        <GoPlus size={23} />
+                      </span>
+                      <p>Save</p>
+                    </div>
+
+                    <div className="drop4" onClick={() => onRemove(data.id)}>
+                      <span>
+                        <RiDeleteBinLine size={23} />
+                      </span>
+                      <p>Delete</p>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            ) : (
+              ""
+            )
+          )
         : ""}
     </div>
   );

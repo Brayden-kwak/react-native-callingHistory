@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
 import "../css/contact.css";
 import { IoIosMore } from "react-icons/io";
-import listData from "../data2.json";
-import {
-  RiUserShared2Line,
-  RiDeleteBinLine,
-  RiPhoneLine,
-} from "react-icons/ri";
+import Moment from "moment";
+
+import { RiDeleteBinLine, RiPhoneLine } from "react-icons/ri";
 import { GoPlus } from "react-icons/go";
 
-const AllCalls = () => {
-  const [list, setList] = useState(listData.data);
+const Inbox = () => {
+  const [list, setList] = useState([]);
   const [clicked, setClicked] = useState(false);
   const [save, setSaved] = useState([]);
 
   useEffect(() => {
-    setList(list);
-    setSaved(save);
-  }, [list, save]);
+    fetch(`https://aircall-job.herokuapp.com/activities`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setList(data);
+      });
+  }, []);
 
   const toggle = (index) => {
     if (clicked === index) {
@@ -41,17 +43,20 @@ const AllCalls = () => {
   return (
     <div className="contact-container">
       <div className="call-container">
-        <p className="call-title">All calls</p>
+        <p className="call-title">Inbox</p>
       </div>
-      {list && list.length > 0
+
+      {list || list.length > 0 || list.call_type === "missed"
         ? list.map((data, index) => (
             <div className="sub-container">
               <RiPhoneLine color={"gray"} size={22} />
               <div className="list-two">
-                <p className="p-1">{data.number}</p>
-                <p className="p-2">{data.message}</p>
+                <p className="p-1">{data.from}</p>
+                <p className="p-2">{data.to}</p>
               </div>
-              <p className="list-three">{data.date}</p>
+              <p className="list-three">
+                {Moment(data.created_at).format("YYYY.MM.DD")}
+              </p>
 
               <div
                 className="collapse1"
@@ -67,8 +72,13 @@ const AllCalls = () => {
               {clicked === index ? (
                 <div className="dropDown">
                   <div className="drop1">
-                    <span>{data.time}</span>
+                    <span>{data.duration}</span>
                     <p>Call time</p>
+                  </div>
+
+                  <div className="drop3">
+                    <span>{data.via}</span>
+                    <p>Via</p>
                   </div>
 
                   <div
@@ -83,12 +93,6 @@ const AllCalls = () => {
                     <p>Save</p>
                   </div>
 
-                  <div className="drop3">
-                    <span>
-                      <RiUserShared2Line size={23} />
-                    </span>
-                    <p>Share</p>
-                  </div>
                   <div className="drop4" onClick={() => onRemove(data.id)}>
                     <span>
                       <RiDeleteBinLine size={23} />
@@ -104,4 +108,4 @@ const AllCalls = () => {
   );
 };
 
-export default AllCalls;
+export default Inbox;

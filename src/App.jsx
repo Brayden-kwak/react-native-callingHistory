@@ -10,12 +10,12 @@ const App = () => {
   return (
     <div className="app-container">
       <Header />
-        <Routes>
-          <Route path="/save" element={<Save/>}/>
-          <Route path="/allCalls" element={<AllCalls/>}/>
-          <Route path="/inbox" element={<Inbox/>}/>
-          <Route exact path="/" element={<Inbox/>}/>
-        </Routes> 
+      <Routes>
+        <Route path="/save" element={<Save />} />
+        <Route path="/allCalls" element={<AllCalls />} />
+        <Route path="/inbox" element={<Inbox />} />
+        <Route exact path="/" element={<Inbox />} />
+      </Routes>
     </div>
   );
 };

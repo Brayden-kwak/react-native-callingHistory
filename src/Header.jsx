@@ -1,6 +1,6 @@
 import React from "react";
 import HeaderToggle from "./components/HeaderToggle.jsx";
-import { VscListFilter } from "react-icons/vsc";
+import { RiMenu2Line } from "react-icons/ri";
 
 const Header = () => {
   const [toggled, setToggled] = React.useState(false);
@@ -49,7 +49,7 @@ const Header = () => {
         </g>
       </svg>
       <HeaderToggle toggled={toggled} onClick={handleClick} />
-      <VscListFilter className="filter" color={"white"} size={25} />
+      <RiMenu2Line className="filter" color={"white"} size={25} />
     </div>
   );
 };

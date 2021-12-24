@@ -71,6 +71,7 @@
     margin-top: 10px;
     justify-content: space-around;
     border-radius: 4px;
+    box-shadow: 1px 1px 3px 1px rgb(0, 137, 112, 0.3);
 
     position: relative;
     max-height: 100%;
@@ -99,11 +100,15 @@
 .drop2 span{
     margin-bottom: 6px;
 }
+.drop3{
+    margin-top: 7px;
+}
 .drop3 p{
     margin-top:2px;
 }
 .drop3 span{
-    margin-bottom: 6px;
+    margin-bottom: 11px;
+    font-size: 0.8rem;
 }
 .drop4 p{
     margin-top:2px;
